@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 
-const getDateFormat = () => {
+const getTodayDateFormat = () => {
   return new Date().toISOString().split("T")[0];
 };
 
 const defaultTodo = {
   name: "",
   description: "",
-  dueDate: getDateFormat(),
-  priority: "low",
+  dueDate: getTodayDateFormat(),
+  priority: "normal",
 };
 
 const AddTodo = ({ setTodos }) => {
   const [todo, setTodo] = useState(defaultTodo);
   const [error, setError] = useState(false);
-
-  console.log(new Date().toDateString());
 
   const handleChange = (data, type) => {
     setTodo((prev) => {
@@ -25,7 +23,11 @@ const AddTodo = ({ setTodos }) => {
 
   const handleSubmit = () => {
     if (!todo.name.trim()) return setError(true);
-    setTodos((prev) => [...prev, { ...todo, id: Math.random() }]);
+    setTodos((prev) =>
+      [...prev, { ...todo, id: Math.random() }].sort(function (a, b) {
+        return new Date(a.dueDate) - new Date(b.dueDate);
+      })
+    );
     setTodo({ ...defaultTodo });
   };
 
@@ -35,6 +37,7 @@ const AddTodo = ({ setTodos }) => {
       <input
         className={`${error ? "error" : ""} name`}
         value={todo["name"]}
+        name="name"
         type={"text"}
         onChange={(e) => {
           handleChange(e, "name");
@@ -62,6 +65,7 @@ const AddTodo = ({ setTodos }) => {
               handleChange(e, "dueDate");
             }}
             type="date"
+            min={getTodayDateFormat()}
             id="date"
           />
         </div>
@@ -75,9 +79,7 @@ const AddTodo = ({ setTodos }) => {
             name="type"
             id="type"
           >
-            <option defaultValue value="low">
-              Low
-            </option>
+            <option value="low">Low</option>
             <option value="normal">Normal</option>
             <option value="high">High</option>
           </select>

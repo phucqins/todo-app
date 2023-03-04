@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap");
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
 input:not([type="checkbox"]),
 textarea,
 select {
@@ -15,6 +27,10 @@ select {
   border: 1px solid #bdbdbd;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+input[name="name"] {
+  margin-bottom: 0px;
 }
 
 select:focus,
@@ -68,10 +84,19 @@ button[type="submit"] {
   justify-content: space-between;
   align-items: center;
 }
-
+.over-fl {
+  overflow: hidden;
+}
 .row-block {
   display: flex;
   gap: 10px;
+}
+
+.row-block p {
+  max-width: 85%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .block {
@@ -86,21 +111,57 @@ button[type="submit"] {
 }
 
 .app {
-  display: flex;
   font-family: "Source Sans Pro";
   font-size: 16px;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   width: 80%;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.main-wrapper {
+  height: calc(100% - 160px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+  border: 1px solid #333;
+  width: inherit;
 }
 
 .add-todo {
   width: 40%;
-  padding: 60px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-self: start;
+}
+
+.todo-list {
+  border-left: 1px solid #333;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.todo-list input[type="text"] {
+  width: calc(100% - 21px);
+}
+
+.list-wrapper {
+  padding: 20px;
+  overflow: auto;
+}
+
+.bulk-action {
+  background: #e0e0e0;
+  padding: 15px;
 }
 
 .edit-todo {
@@ -110,20 +171,19 @@ button[type="submit"] {
   align-self: start;
 }
 
-.todo-list {
-  height: 100%;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  align-self: start;
-  width: 60%;
-}
-
 .error {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }
 
 .error-text {
   font-size: 12px;
   color: red;
+}
+
+label[for="des"] {
+  margin-top: 10px;
+}
+
+.bulk-title {
+  max-width: fit-content !important;
 }
